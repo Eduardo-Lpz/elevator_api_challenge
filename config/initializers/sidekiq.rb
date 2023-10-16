@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "sidekiq"
 require "sidekiq-unique-jobs"
 
 Sidekiq.configure_server do |config|

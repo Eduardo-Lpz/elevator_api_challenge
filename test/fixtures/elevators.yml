@@ -1,0 +1,27 @@
+big_capacity:
+  building: skyscraper
+  model: <%= Elevator::MODELS.sample %>
+  capacity: <%= Faker::Number.between(from: 1_000, to: 10_000) %>
+
+low_capacity:
+  building: hotel
+  model: <%= Elevator::MODELS.sample %>
+  capacity: <%= Faker::Number.between(from: 1_000, to: 5_000) %>
+
+ground_floor_elevator:
+  building: hotel
+  model: <%= Elevator::MODELS.sample %>
+  capacity: <%= Faker::Number.between(from: 1_000, to: 5_000) %>
+  status: <%= Elevator.statuses[:ground_floor] %>
+
+traveling_elevator:
+  building: hotel
+  model: <%= Elevator::MODELS.sample %>
+  capacity: <%= Faker::Number.between(from: 1_000, to: 5_000) %>
+  status: <%= Elevator.statuses[:traveling] %>
+
+top_floor_elevator:
+  building: hotel
+  model: <%= Elevator::MODELS.sample %>
+  capacity: <%= Faker::Number.between(from: 1_000, to: 5_000) %>
+  status: <%= Elevator.statuses[:top_floor] %>

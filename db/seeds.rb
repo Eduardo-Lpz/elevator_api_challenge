@@ -5,3 +5,24 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+puts "🌱 seeding"
+
+10.times do
+  building = Building.create(
+      floors: Faker::Number.between(from: 5, to: 10),
+      street: Faker::Address.street_address,
+      city: Faker::Address.city,
+      country: Faker::Address.country
+  )
+
+  Faker::Number.between(from: 3, to: 10).times do
+    Elevator.create(
+      building: building,
+      model: Elevator::MODELS.sample,
+      capacity: Faker::Number.between(from: 1_000, to: 10_000)
+    )
+  end
+end
+
+puts "🌱 finish seeding"

@@ -20,7 +20,7 @@ module Api
         @elevator = Elevator.new(elevator_params)
 
         if @elevator.save
-          render json: @elevator, status: :created, location: @elevator
+          render json: @elevator, status: :created, location: api_v1_elevator_url(@elevator)
         else
           render json: @elevator.errors, status: :unprocessable_entity
         end
@@ -36,7 +36,7 @@ module Api
 
       def destroy
         if @elevator.destroy
-          render json: { message: "Elevator deleted" }
+          # render json: { message: "Elevator deleted" }
         else
           render json: @elevator.errors, status: :unprocessable_entity
         end
@@ -44,19 +44,21 @@ module Api
 
       def move_down
         if @elevator.top_floor?
-          MoveDownJob.perform_async(@elevator.id, @building.floors)
+          MoveDownWorker.perform_async(@elevator.id, @building.floors)
           render json: { message: "Elevator #{@elevator.id} is moving down" }
         else
-          render json: { message: "Elevator #{@elevator.id} is moving or already in ground floor" }
+          render json: { message: "Elevator #{@elevator.id} is moving or already in ground floor" },
+                 status: :unprocessable_entity
         end
       end
 
       def move_up
         if @elevator.ground_floor?
-          MoveUpJob.perform_async(@elevator.id, @building.floors)
+          MoveUpWorker.perform_async(@elevator.id, @building.floors)
           render json: { message: "Elevator is moving up" }
         else
-          render json: { message: "Elevator #{@elevator.id} is moving or already in top floor" }
+          render json: { message: "Elevator #{@elevator.id} is moving or already in top floor" },
+                 status: :unprocessable_entity
         end
       end
 
@@ -71,7 +73,7 @@ module Api
       end
 
       def elevator_params
-        params.require(:elevator).permit(:model, :capacity)
+        params.require(:elevator).permit(:building_id, :model, :capacity)
       end
     end
   end

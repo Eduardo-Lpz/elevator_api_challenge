@@ -8,7 +8,7 @@ class MoveUpWorker
   def perform(elevator_id, floors)
     elevator = Elevator.find(elevator_id)
     elevator.update(status: Elevator.statuses[:traveling])
-    sleep 3 * floors
+    Kernel.sleep 3 * floors
     elevator.update(status: Elevator.statuses[:top_floor])
   end
 end

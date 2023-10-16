@@ -19,7 +19,7 @@ module Api
         @building = Building.new(building_params)
 
         if @building.save
-          render json: @building, status: :created, location: @building
+          render json: @building, status: :created, location: api_v1_building_url(@building)
         else
           render json: @building.errors, status: :unprocessable_entity
         end
