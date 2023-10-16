@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MoveUpJob
+class MoveUpWorker
   include Sidekiq::Worker
 
   sidekiq_options lock: :until_executed

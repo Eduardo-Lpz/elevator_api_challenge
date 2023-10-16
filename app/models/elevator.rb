@@ -12,7 +12,7 @@ class Elevator < ApplicationRecord
   belongs_to :building
 
   validates :model, inclusion: { in: MODELS }
-  validates :status, presence: true
+  validates :building, :status, :capacity, presence: true
 
   before_destroy :ensure_not_traveling
 

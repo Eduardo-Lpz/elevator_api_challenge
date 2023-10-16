@@ -16,9 +16,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_15_204335) do
 
   create_table "buildings", force: :cascade do |t|
     t.integer "floors", null: false
-    t.string "street"
-    t.string "city"
-    t.string "country"
+    t.string "street", null: false
+    t.string "city", null: false
+    t.string "country", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_15_204335) do
   create_table "elevators", force: :cascade do |t|
     t.bigint "building_id", null: false
     t.string "model", null: false
-    t.integer "capacity"
+    t.integer "capacity", null: false
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
