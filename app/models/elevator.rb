@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Elevator < ApplicationRecord
+  ELEVATOR_JSON_SCHEMA = Rails.root.join("config", "schemas", "elevator.json")
+
   MODEL_A = "A"
   MODEL_B = "B"
   MODEL_C = "C"
@@ -13,6 +15,7 @@ class Elevator < ApplicationRecord
 
   validates :model, inclusion: { in: MODELS }
   validates :building, :status, :capacity, presence: true
+  validates :data, presence: true, json: { schema: ELEVATOR_JSON_SCHEMA }
 
   before_destroy :ensure_not_traveling
 

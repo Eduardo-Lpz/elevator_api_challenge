@@ -73,7 +73,7 @@ module Api
       end
 
       def elevator_params
-        params.require(:elevator).permit(:building_id, :model, :capacity)
+        params.require(:elevator).permit(:building_id, :model, :capacity, data: {})
       end
     end
   end
