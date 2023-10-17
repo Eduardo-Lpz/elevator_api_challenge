@@ -45,9 +45,9 @@ module Api
       def move_down
         if @elevator.top_floor?
           MoveDownWorker.perform_async(@elevator.id, @building.floors)
-          render json: { message: "Elevator #{@elevator.id} is moving down" }
+          render json: { message: "Elevator #{@elevator.id} is moving to ground floor" }
         else
-          render json: { message: "Elevator #{@elevator.id} is moving or already in ground floor" },
+          render json: { message: "Elevator #{@elevator.id} is traveling or already in ground floor" },
                  status: :unprocessable_entity
         end
       end
@@ -55,9 +55,9 @@ module Api
       def move_up
         if @elevator.ground_floor?
           MoveUpWorker.perform_async(@elevator.id, @building.floors)
-          render json: { message: "Elevator is moving up" }
+          render json: { message: "Elevator #{@elevator.id} is moving to top floor" }
         else
-          render json: { message: "Elevator #{@elevator.id} is moving or already in top floor" },
+          render json: { message: "Elevator #{@elevator.id} is traveling or already in top floor" },
                  status: :unprocessable_entity
         end
       end
