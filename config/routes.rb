@@ -1,5 +1,3 @@
-require "sidekiq/web"
-
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
@@ -12,4 +10,6 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  match '*path', to: redirect('/'), via: :all
 end
