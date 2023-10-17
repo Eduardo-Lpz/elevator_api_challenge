@@ -25,4 +25,20 @@ class ElevatorTest < ActiveSupport::TestCase
     elevator.building = nil
     assert_not elevator.save
   end
+
+  test "should not save elevator with invalid data" do
+    elevator = elevators(:big_capacity)
+    elevator.data = {}
+    assert_not elevator.save
+  end
+
+  test "should not save elevator with invalid data key-value" do
+    elevator = elevators(:big_capacity)
+    elevator.data = {
+      maintainer: Faker::Company.name,
+      maintenance_date: 123_456,
+      doors_status: ["good"]
+    }
+    assert_not elevator.save
+  end
 end
