@@ -7,9 +7,9 @@ module Api
       before_action :set_building, only: %i[move_down move_up]
 
       def index
-        @elevators = Elevator.all
+        pagy, elevators = pagy(Elevator.all)
 
-        render json: @elevators
+        render json: { data: elevators, meta: pagy_metadata(pagy) }
       end
 
       def show

@@ -6,9 +6,9 @@ module Api
       before_action :set_building, only: %i[show update destroy]
 
       def index
-        @buildings = Building.all
+        pagy, buildings = pagy(Building.all)
 
-        render json: @buildings
+        render json: { data: buildings, meta: pagy_metadata(pagy) }
       end
 
       def show
@@ -16,12 +16,12 @@ module Api
       end
 
       def create
-        @building = Building.new(building_params)
+        new_building = Building.new(building_params)
 
-        if @building.save
-          render json: @building, status: :created, location: api_v1_building_url(@building)
+        if new_building.save
+          render json: new_building, status: :created, location: api_v1_building_url(new_building)
         else
-          render json: @building.errors, status: :unprocessable_entity
+          render json: new_building.errors, status: :unprocessable_entity
         end
       end
 
